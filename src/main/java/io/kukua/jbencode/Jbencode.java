@@ -35,6 +35,15 @@ public class Jbencode {
         return sb.toString();
     }
 
+    /**
+     * Encodes parameter according to <a href="https://en.wikipedia.org/wiki/Bencode">Bencode</a> specifications.
+     * Encoding is done recursively in case of {@link List} or {@link SortedMap}.
+     *
+     * @param input The value to be encoded.
+     *              Must be of type {@link Long}, {@link String}, {@link List} Or {@link SortedMap}.
+     * @return The encoded value.
+     * @throws InvalidInputException Thrown when invalid type is given as parameter.
+     */
     @SuppressWarnings("unchecked")
     public <T> String encode(T input) throws InvalidInputException {
         return switch (input) {
@@ -131,6 +140,19 @@ public class Jbencode {
         };
     }
 
+    /**
+     * Decodes the string according to <a href="https://en.wikipedia.org/wiki/Bencode">Bencode</a> specifications.
+     * Returns the first possible decoded value and ignores all subsequent ones. For example:
+     *
+     * <pre>3:foo3:bar -> "foo"</pre>
+     * <pre>i10e3:foo -> 10</pre>
+     * <pre>l3:barei10e -> ["bar"]</pre>
+     * <pre>d3:foo3:barei10e -> {"foo" : "bar"}</pre>
+     *
+     * @param input The value to be decoded.
+     * @return The decoded {@link Long}, {@link String}, {@link List} Or {@link SortedMap} value.
+     * @throws InvalidInputException Thrown when invalid encoded value is given as parameter.
+     */
     public Object decode(String input) throws InvalidInputException {
         return decode(new StringCharacterIterator(input));
     }

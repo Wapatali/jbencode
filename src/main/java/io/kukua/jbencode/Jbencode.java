@@ -142,12 +142,7 @@ public class Jbencode {
 
     /**
      * Decodes the string according to <a href="https://en.wikipedia.org/wiki/Bencode">Bencode</a> specifications.
-     * Returns the first possible decoded value and ignores all subsequent ones. For example:
-     *
-     * <pre>3:foo3:bar -> "foo"</pre>
-     * <pre>i10e3:foo -> 10</pre>
-     * <pre>l3:barei10e -> ["bar"]</pre>
-     * <pre>d3:foo3:barei10e -> {"foo" : "bar"}</pre>
+     * Returns the first possible decoded value and ignores all subsequent ones.
      *
      * @param input The value to be decoded.
      * @return The decoded {@link Long}, {@link String}, {@link List} Or {@link SortedMap} value.

@@ -55,7 +55,7 @@ public class Jbencode {
         };
     }
 
-    static private Long decodeInteger(CharacterIterator iterator) {
+    static private Long decodeLong(CharacterIterator iterator) {
         StringBuilder sb = new StringBuilder();
         // move the cursor next to the delimiter 'i'
         iterator.next();
@@ -132,7 +132,7 @@ public class Jbencode {
 
     static private Object decode(CharacterIterator iterator) {
         return switch (iterator.current()) {
-            case 'i' -> decodeInteger(iterator);
+            case 'i' -> decodeLong(iterator);
             case '0','1','2','3','4','5','6','7','8','9' -> decodeString(iterator);
             case 'l' -> decodeList(iterator);
             case 'd' -> decodeMap(iterator);

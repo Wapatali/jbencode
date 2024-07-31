@@ -8,15 +8,15 @@ import java.util.*;
 
 public class Jbencode {
 
-    private String encode(Long input) {
+    static private String encode(Long input) {
         return String.format("i%de", input);
     }
 
-    private String encode(String input) {
+    static private String encode(String input) {
         return String.format("%d:%s", input.length(), input);
     }
 
-    private String encode(List<Object> input) {
+    static private String encode(List<Object> input) {
         StringBuilder sb = new StringBuilder("l");
         for (Object o : input) {
             sb.append(encode(o));
@@ -25,7 +25,7 @@ public class Jbencode {
         return sb.toString();
     }
 
-    private String encode(SortedMap<String, Object> input) {
+    static private String encode(SortedMap<String, Object> input) {
         StringBuilder sb = new StringBuilder("d");
         for (Map.Entry<String, Object> entry : input.entrySet()) {
             sb.append(encode(entry.getKey()));
@@ -45,7 +45,7 @@ public class Jbencode {
      * @throws InvalidInputException Thrown when invalid type is given as parameter.
      */
     @SuppressWarnings("unchecked")
-    public <T> String encode(T input) throws InvalidInputException {
+    static public <T> String encode(T input) throws InvalidInputException {
         return switch (input) {
             case Long l -> encode(l);
             case String s -> encode(s);
@@ -55,7 +55,7 @@ public class Jbencode {
         };
     }
 
-    private Long decodeInteger(CharacterIterator iterator) {
+    static private Long decodeInteger(CharacterIterator iterator) {
         StringBuilder sb = new StringBuilder();
         // move the cursor next to the delimiter 'i'
         iterator.next();
@@ -76,7 +76,7 @@ public class Jbencode {
         }
     }
 
-    private String decodeString(CharacterIterator iterator) {
+    static private String decodeString(CharacterIterator iterator) {
         StringBuilder sb = new StringBuilder();
         do {
             sb.append(iterator.current());
@@ -100,7 +100,7 @@ public class Jbencode {
         }
     }
 
-    private List<Object> decodeList(CharacterIterator iterator) {
+    static private List<Object> decodeList(CharacterIterator iterator) {
         List<Object> result = new ArrayList<>();
         // move the cursor next to the delimiter 'l'
         iterator.next();
@@ -115,7 +115,7 @@ public class Jbencode {
         return result;
     }
 
-    private SortedMap<String, Object> decodeMap(CharacterIterator iterator) {
+    static private SortedMap<String, Object> decodeMap(CharacterIterator iterator) {
         SortedMap<String, Object> result = new TreeMap<>();
         // move the cursor next to the delimiter 'd'
         iterator.next();
@@ -130,7 +130,7 @@ public class Jbencode {
         return result;
     }
 
-    private Object decode(CharacterIterator iterator) {
+    static private Object decode(CharacterIterator iterator) {
         return switch (iterator.current()) {
             case 'i' -> decodeInteger(iterator);
             case '0','1','2','3','4','5','6','7','8','9' -> decodeString(iterator);
@@ -153,7 +153,7 @@ public class Jbencode {
      * @return The decoded {@link Long}, {@link String}, {@link List} Or {@link SortedMap} value.
      * @throws InvalidInputException Thrown when invalid encoded value is given as parameter.
      */
-    public Object decode(String input) throws InvalidInputException {
+    static public Object decode(String input) throws InvalidInputException {
         return decode(new StringCharacterIterator(input));
     }
 

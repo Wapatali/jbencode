@@ -35,37 +35,37 @@ dependencies {
 JBencode has two functions, one for encoding and another for decoding :
 
 ```java
-public <T> String encode(T input) throws InvalidInputException {}
+static public <T> String encode(T input) throws InvalidInputException {}
 
-public Object decode(String input) throws InvalidInputException {}
+static public Object decode(String input) throws InvalidInputException {}
 ```
 
 According to the algorithm specifications, 4 types of values can be encoded: an integer, a string, a list or a dictionary. 
 The encoding function therefore accepts a parameter of type `Long`, `String`, `List` or `SortedMap`:
 
 ```java
-String integerEncoded = jbencode.encode(10L);                             // "i10e"
+String integerEncoded = Jbencode.encode(10L);                             // "i10e"
 
-String stringEncoded = jbencode.encode("foo");                            // "3:foo"
+String stringEncoded = Jbencode.encode("foo");                            // "3:foo"
 
-String listEncoded = jbencode.encode(List.of(10L, "foo"));                // "li10e3:fooe"
+String listEncoded = Jbencode.encode(List.of(10L, "foo"));                // "li10e3:fooe"
 
-String dictEncoded = jbencode.encode(new TreeMap<>(Map.of("foo", 10L)));  // "d3:fooi10ee"
+String dictEncoded = Jbencode.encode(new TreeMap<>(Map.of("foo", 10L)));  // "d3:fooi10ee"
 ```
 
 Decoding accepts a string as parameter and returns an object of type `Long`, `String`, `List` or `SortedMap`.
 The first possible value is returned, the rest of the string is ignored. For example:
 
 ```java
-Long integer = (Long) jbencode.decode("i10e");                                                  // 10
+Long integer = (Long) Jbencode.decode("i10e");                                                  // 10
 
-Long otherInteger = (Long) jbencode.decode("i10e3:foo");                                        // 10 (ignores "foo")
+Long otherInteger = (Long) Jbencode.decode("i10e3:foo");                                        // 10 (ignores "foo")
 
-String string = (String) jbencode.decode("3:foo");                                              // "foo"
+String string = (String) Jbencode.decode("3:foo");                                              // "foo"
 
-List<Object> list = (List<Object>) jbencode.decode("li10e3:fooe");                              // [10, "foo"]
+List<Object> list = (List<Object>) Jbencode.decode("li10e3:fooe");                              // [10, "foo"]
 
-SortedMap<String, Object> dict = (SortedMap<String, Object>) jbencode.decode("d3:foo3:bare");   // {"foo": "bar"}
+SortedMap<String, Object> dict = (SortedMap<String, Object>) Jbencode.decode("d3:foo3:bare");   // {"foo": "bar"}
 ```
 
 ## License

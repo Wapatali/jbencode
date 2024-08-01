@@ -1,3 +1,7 @@
+![Static Badge](https://img.shields.io/badge/Version-1.0.0-green?style=for-the-badge)
+![Code size](https://img.shields.io/github/languages/code-size/wapatali/jbencode?style=for-the-badge)
+![License](https://img.shields.io/github/license/wapatali/jbencode?style=for-the-badge)
+
 # JBencode
 
 _JBencode_ is a small library written in Java that lets you encode and decode according to the specifications of the [Bencode](https://wiki.theory.org/BitTorrentSpecification#Bencoding) algorithm.

@@ -1,10 +1,11 @@
 # JBencode
 
-_JBencode_ is a small library written in Java that lets you encode and decode according to the specifications of the [Bencode](https://en.wikipedia.org/wiki/Bencode) algorithm.
-There are already enough libraries for this, and _JBencode_ is not intended to replace them. It's just a simple implementation proposal.
+_JBencode_ is a small library written in Java that lets you encode and decode according to the specifications of the [Bencode](https://wiki.theory.org/BitTorrentSpecification#Bencoding) algorithm.
+It is designed to be easy to learn and use, with a minimalist and lightweight implementation.
 
 ## Installation
 
+The examples below use _Gradle_ as a project manager.
 The library is published in the _Github Packages_ registry and must therefore be declared in your `build.gradle` file:
 
 ```groovy
@@ -20,12 +21,12 @@ Then, simply add the following dependency:
 
 ```groovy
 dependencies {
-    implementation 'io.kukua:jbencode:0.2.0'
+    implementation 'io.kukua:jbencode:1.0.0'
     // others dependencies ...
 }
 ```
 
-## Usage
+## Examples
 
 JBencode has two functions, one for encoding and another for decoding :
 
@@ -52,15 +53,15 @@ Decoding accepts a string as parameter and returns an object of type `Long`, `St
 The first possible value is returned, the rest of the string is ignored. For example:
 
 ```java
-Long integer = jbencode.decode("i10e");                             // 10
+Long integer = (Long) jbencode.decode("i10e");                                                  // 10
 
-Long otherInteger = jbencode.decode("i10e3:foo");                   // 10 (ignores "foo")
+Long otherInteger = (Long) jbencode.decode("i10e3:foo");                                        // 10 (ignores "foo")
 
-String string = jbencode.decode("3:foo");                           // "foo"
+String string = (String) jbencode.decode("3:foo");                                              // "foo"
 
-List<Object> list = jbencode.decode("li10e3:fooe");                 // [10, "foo"]
+List<Object> list = (List<Object>) jbencode.decode("li10e3:fooe");                              // [10, "foo"]
 
-SortedMap<String, Object> dict = jbencode.decode("d3:foo3:bare");   // {"foo": "bar"}
+SortedMap<String, Object> dict = (SortedMap<String, Object>) jbencode.decode("d3:foo3:bare");   // {"foo": "bar"}
 ```
 
 ## License
